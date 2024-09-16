@@ -13,8 +13,7 @@ int servoPin = 5;
 int switchPin = 8;
 
 void setup() {
-  // put your setup code here, ttriggerPino run once:
-  // pinMode(sensorPin, INPUT);
+
   pinMode(outputPin, OUTPUT);
   pinMode(triggerPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -28,8 +27,11 @@ void setup() {
 
 
 void loop() {
+  
+  // loop one 
+  
   for (pos = 0; pos <= 180; pos += 3) { // goes from 0 degrees to 180 degrees
-    // in steps of 1 degree
+    // in steps of 3 degree
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
     delay(15);                       // waits 15ms for the servo to reach the position
 
@@ -44,11 +46,14 @@ void loop() {
 
 
   }
+
+  // loop two (reverse)
+  
   for (pos = 180; pos >= 0; pos -= 3) { // goes from 180 degrees to 0 degrees
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
     delay(15);
 
-    int distance_cm = calculateDistance();
+    int distance_cm = calculateDistance(); // distance of tge object in cm
 
 
     if (distance_cm < 10){
@@ -63,6 +68,9 @@ void loop() {
 int calculateDistance() {
   long duration, cm;
 
+
+  // sending out pulse
+  
   digitalWrite(triggerPin, LOW);
   delayMicroseconds(2);
   digitalWrite(triggerPin, HIGH);
@@ -77,18 +85,13 @@ int calculateDistance() {
 
   Serial.print("Distance: ");
   Serial.println(cm);
-
-  // delay(100);
-
-  //  if (cm < 5){
-  //   digitalWrite(outputPin, HIGH);
-  //  } else {
-  //   digitalWrite(outputPin, LOW);
-  //  }
-
+  
   return cm;
 }
 
 long microsecondsToCentimeters(long microseconds) {
+
+  // divide by two because ray has to travel to the object and back
+  
   return microseconds / 29 / 2;
 }
