@@ -19,8 +19,6 @@ void setup() {
   pinMode(echoPin, INPUT);
   myservo.attach(servoPin);
 
-  // digitalWrite(outputPin, LOW);
-
   Serial.begin(9600);
 }
 
@@ -53,7 +51,7 @@ void loop() {
     myservo.write(pos);              // tell servo to go to position in variable 'pos'
     delay(15);
 
-    int distance_cm = calculateDistance(); // distance of tge object in cm
+    int distance_cm = calculateDistance(); // distance of the object in cm
 
 
     if (distance_cm < 10){
@@ -76,7 +74,6 @@ int calculateDistance() {
   digitalWrite(triggerPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(triggerPin, LOW);
-  // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPin, HIGH);
 
 
